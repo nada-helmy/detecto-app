@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../home/home-screen.dart';
-import 'formfield.dart';
+import 'CustomFormField.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -13,15 +13,16 @@ class Login extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color.fromARGB(225,67, 83, 52),
         body: SingleChildScrollView(
            child: Column(
             children: [
              SizedBox(height: height*.05,),
               Text('Please sign in to continue!',
                 style:Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color:Colors.orange,) ,),
+                  color:Color.fromARGB(225,250, 241, 228),) ,),
               Card(
-                color:Colors.blueGrey.shade500,
+                color:Color.fromARGB(225,236, 227, 206),
                 margin:EdgeInsets.all(12) ,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)
@@ -35,11 +36,14 @@ class Login extends StatelessWidget {
                       Form(
                           child: Column(
                             children: [
-                              TextFormfield(
+                              CustomTextFormfield(
+                                  hinttext: "User Name",
+                                  icon: Icons.person),
+                              CustomTextFormfield(
                                 hinttext: ' Email',
                                 icon:Icons.email_outlined ,
                               ),
-                              TextFormfield(
+                              CustomTextFormfield(
                                 hinttext: ' Password',
                                 icon:Icons.password_outlined ,
                               ),
@@ -48,7 +52,7 @@ class Login extends StatelessWidget {
                       SizedBox(height: height*.07 ,),
                       ElevatedButton(
                         style:ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor:  Color.fromARGB(225,236, 227, 206),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           )
@@ -59,7 +63,7 @@ class Login extends StatelessWidget {
                           } ,
                             child: Text('Login',
                                 style:Theme.of(context).textTheme.bodyMedium!
-                                    .copyWith(color:Colors.blueGrey) ,),
+                                    .copyWith(color:Color.fromARGB(225, 58, 77, 57)) ,),
                       ),
                       SizedBox(height: height*.04),
                     ],

@@ -6,7 +6,7 @@ import 'app-colors.dart';
 class Mytheme{
 
   static ThemeData light=ThemeData(
-    scaffoldBackgroundColor: Colors.white,//Color(0xffE4EEE1),
+    scaffoldBackgroundColor: Color.fromARGB(225,250, 241, 228),//Color(0xffE4EEE1),
     appBarTheme: AppBarTheme(
       shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -16,11 +16,11 @@ class Mytheme{
       elevation: 0,
       centerTitle: true,
       toolbarHeight:100,
-      backgroundColor:Colors.blueGrey.shade500 ,
+      backgroundColor:Color.fromARGB(225, 58, 77, 57) ,
       titleTextStyle:GoogleFonts.laila(
         fontWeight: FontWeight.w600,
         fontSize: 45,
-        color: Colors.white
+        color: Color.fromARGB(225,236, 227, 206)
       )
     ),
     textTheme:TextTheme(
@@ -32,7 +32,7 @@ class Mytheme{
       bodyMedium:GoogleFonts.elMessiri(
           fontWeight: FontWeight.bold,
           fontSize: 35,
-          color: Colors.white
+          color: Color.fromARGB(225,250, 241, 228)
       ),
       bodySmall: GoogleFonts.elMessiri(
           fontWeight: FontWeight.bold,
@@ -42,7 +42,7 @@ class Mytheme{
 
     ),
     iconTheme: IconThemeData(
-      color:Colors.blueGrey,
+      color:Color.fromARGB(225,250, 241, 228),
       size:30,
       weight: 20 ,
     )

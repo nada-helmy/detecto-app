@@ -10,17 +10,18 @@ class CustomRow extends StatelessWidget {
       child: ElevatedButton(
         onPressed: (){},
         style:ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueGrey.shade500,
+            backgroundColor: Color.fromARGB(225,67, 83, 52),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             )
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(text,
                 style:Theme.of(context).textTheme.bodyMedium),
             SizedBox(width:12,),
-            Icon(Icons.arrow_forward_ios)
+            Icon(Icons.arrow_forward_ios,color: Color.fromARGB(225,250, 241, 228),)
           ],
         ),
       ),
