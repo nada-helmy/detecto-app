@@ -15,13 +15,11 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height:height*.01 ,),
-            Text('Welcome!',
+            Text('''Welcome!            How can I help you!''',
                 style:Theme.of(context).textTheme.bodyLarge!
-            .copyWith(color: Colors.orange,fontSize:38 )),
-            SizedBox(height:height*.001 ,),
-            Text('please select one...',
-                style:Theme.of(context).textTheme.bodyLarge!
-                    .copyWith(color: Colors.orange,fontSize:32 )),
+            .copyWith(color: Color.fromARGB(225,67, 83, 52),fontSize:38 )),
+            SizedBox(height:height*.040 ,),
+
             SizedBox(height:height*.07 ,),
             CustomRow(text: 'SuperMarket',),
             CustomRow(text: 'Object  detection',),

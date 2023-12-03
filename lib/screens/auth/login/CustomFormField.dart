@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class TextFormfield extends StatelessWidget {
+class CustomTextFormfield extends StatelessWidget {
 
-  TextFormfield({required this.hinttext,required this.icon});
+  CustomTextFormfield({required this.hinttext,required this.icon});
   String hinttext;
   IconData icon;
   @override
@@ -13,31 +13,31 @@ class TextFormfield extends StatelessWidget {
       ),
       child: TextFormField(
         style: TextStyle(
-          color: Colors.black,
+          color:Color.fromARGB(225,206, 222, 189),
           fontSize: 25
         ),
         decoration: InputDecoration(
           prefixIcon:Icon(icon) ,
           hintText:hinttext,
           hintStyle: TextStyle(
-            color: Colors.grey,
+            color: Color.fromARGB(225, 58, 77, 57),
             fontSize: 30,
             fontWeight: FontWeight.w400
           ),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Color.fromARGB(225,236, 227, 206),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: BorderSide(
-                  color: Colors.white, width:2)),
+                  color: Color.fromARGB(225, 58, 77, 57), width:2)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: BorderSide(
-                  color: Colors.white, width:2)),
+                  color: Color.fromARGB(225, 58, 77, 57), width:2)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: BorderSide(
-                  color: Colors.white, width:2)),
+                  color: Color.fromARGB(225, 58, 77, 57), width:2)),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: BorderSide(
