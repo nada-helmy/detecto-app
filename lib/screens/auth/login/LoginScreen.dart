@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import '../../home/home-screen.dart';
+import '../../home/HomeScreen.dart';
 import 'CustomFormField.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+
+class LoginScreen extends StatelessWidget {
+ // const LoginScreen({super.key});
 
   static const String routeName = 'login';
+
+  FlutterTts ftts = FlutterTts();
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +22,15 @@ class Login extends StatelessWidget {
            child: Column(
             children: [
              SizedBox(height: height*.05,),
-              Text('Please sign in to continue!',
+          GestureDetector(
+            onTap:() {
+
+              speak('Please sign in to continue!');
+            },
+
+            child: Text('Please sign in to continue!',
                 style:Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color:Color.fromARGB(225,250, 241, 228),) ,),
+                  color:Color.fromARGB(225,250, 241, 228),) ,),),
               Card(
                 color:Color.fromARGB(225,236, 227, 206),
                 margin:EdgeInsets.all(12) ,
@@ -50,21 +60,26 @@ class Login extends StatelessWidget {
                             ],
                           )),
                       SizedBox(height: height*.07 ,),
-                      ElevatedButton(
-                        style:ElevatedButton.styleFrom(
-                          backgroundColor:  Color.fromARGB(225,236, 227, 206),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          )
-                        ),
-                          onPressed:(){
-                            Navigator.of(context)
-                                .pushNamed(HomeScreen.routeName);
-                          } ,
-                            child: Text('Login',
-                                style:Theme.of(context).textTheme.bodyMedium!
-                                    .copyWith(color:Color.fromARGB(225, 58, 77, 57)) ,),
-                      ),
+                  ElevatedButton(
+                    style:ElevatedButton.styleFrom(
+                      backgroundColor:  Color.fromARGB(225,236, 227, 206),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      )
+                    ),
+                      onPressed:(){
+                        Navigator.of(context)
+                            .pushNamed(HomeScreen.routeName);
+
+                          speak('Successfully Login');
+
+                      } ,
+                        child:
+                       Text('Login',
+                              style:Theme.of(context).textTheme.bodyMedium!
+                                  .copyWith(color:Color.fromARGB(225, 58, 77, 57)) ,
+                       ),
+                  ),
                       SizedBox(height: height*.04),
                     ],
                   ),
@@ -74,5 +89,14 @@ class Login extends StatelessWidget {
       ),
         ),
     ));
+  }
+
+  void speak(String text)async{
+    await ftts.setLanguage("en-US");
+    await ftts.setSpeechRate(0.5); //speed of speech
+    await ftts.setVolume(1.0); //volume of speech
+    await ftts.setPitch(1);//pitc of sound
+    //play text to sp
+    await ftts.speak(text);
   }
 }
