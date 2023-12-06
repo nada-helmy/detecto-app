@@ -1,3 +1,4 @@
+import 'package:detecto_app/screens/news/news-screen.dart';
 import 'package:flutter/material.dart';
 import 'screens/auth/login/login.dart';
 import 'screens/home/home-screen.dart';
@@ -15,10 +16,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: Mytheme.light,
       debugShowCheckedModeBanner: false,
-      initialRoute: Login.routeName,
+      initialRoute: NewsScreen.routeName,
       routes: {
         Login.routeName:(context)=>Login(),
         HomeScreen.routeName:(context)=>HomeScreen(),
+        NewsScreen.routeName:(context)=>NewsScreen(),
       },
     );
   }

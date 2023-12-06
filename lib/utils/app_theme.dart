@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'app-colors.dart';
+import 'appcolor.dart';
+
 
 class Mytheme{
-
   static ThemeData light=ThemeData(
-    scaffoldBackgroundColor: Colors.white,//Color(0xffE4EEE1),
+    scaffoldBackgroundColor: Appcolor.beej,
     appBarTheme: AppBarTheme(
       shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -16,11 +16,11 @@ class Mytheme{
       elevation: 0,
       centerTitle: true,
       toolbarHeight:100,
-      backgroundColor:Colors.blueGrey.shade500 ,
+      backgroundColor:Appcolor.darkgreen ,
       titleTextStyle:GoogleFonts.laila(
         fontWeight: FontWeight.w600,
         fontSize: 45,
-        color: Colors.white
+        color: Appcolor.beej
       )
     ),
     textTheme:TextTheme(

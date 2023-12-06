@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../news/news-screen.dart';
+
 class CustomRow extends StatelessWidget {
    CustomRow({required this.text});
   String text;
