@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'appcolor.dart';
-
+import 'app-colors.dart';
 
 class Mytheme{
+
   static ThemeData light=ThemeData(
     scaffoldBackgroundColor: Appcolor.beej,
     appBarTheme: AppBarTheme(
@@ -42,7 +42,7 @@ class Mytheme{
 
     ),
     iconTheme: IconThemeData(
-      color:Colors.blueGrey,
+      color:Color.fromARGB(225,250, 241, 228),
       size:30,
       weight: 20 ,
     )

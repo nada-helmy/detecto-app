@@ -1,7 +1,9 @@
+
+import 'package:detecto_app/screens/camera/ImageDisplayScreen.dart';
 import 'package:detecto_app/screens/news/news-screen.dart';
 import 'package:flutter/material.dart';
-import 'screens/auth/login/login.dart';
-import 'screens/home/home-screen.dart';
+import 'screens/auth/login/LoginScreen.dart';
+import 'screens/home/HomeScreen.dart';
 import 'utils/app_theme.dart';
 
 void main() {
@@ -16,11 +18,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: Mytheme.light,
       debugShowCheckedModeBanner: false,
-      initialRoute: NewsScreen.routeName,
+      initialRoute: LoginScreen.routeName,
       routes: {
-        Login.routeName:(context)=>Login(),
+        LoginScreen.routeName:(context)=>LoginScreen(),
         HomeScreen.routeName:(context)=>HomeScreen(),
         NewsScreen.routeName:(context)=>NewsScreen(),
+       // CameraScreen.routeName:(context) => CameraScreen(),
+
       },
     );
   }
