@@ -7,13 +7,14 @@ import '../../models/NewsResponse.dart';
 class NewsItem extends StatelessWidget {
   NewsItem({required this.news});
   News news;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-          margin: EdgeInsets.all(10),
+          margin: EdgeInsets.all(12),
           padding: EdgeInsets.all(15),
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
@@ -43,9 +44,6 @@ class NewsItem extends StatelessWidget {
             ],
           ) ,
         ),
-        //SizedBox(height: 10,),
-
-
       ],
     );
   }

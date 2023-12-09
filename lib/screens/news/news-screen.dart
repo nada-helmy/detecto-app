@@ -26,12 +26,12 @@ class NewsScreen extends StatelessWidget {
           }else if(snapshot.hasError){
             return Text('error',
               style:Theme.of(context).textTheme.bodySmall!
-                  .copyWith(color:Colors.black ) ,);
+                  .copyWith(color:Appcolor.darkgreen ) ,);
           }
           if(snapshot.data?.status=='error') {
             return Text(snapshot.data?.message??'',
               style:Theme.of(context).textTheme.bodySmall!
-                  .copyWith(color:Colors.black ) ,);
+                  .copyWith(color:Appcolor.darkgreen) ,);
           }
           var newsList= snapshot.data?.articles??[];
           return ListView.builder(
