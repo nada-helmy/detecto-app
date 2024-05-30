@@ -28,9 +28,12 @@ class LoginScreen extends StatelessWidget {
               speak('Please sign in to continue!');
             },
 
-            child: Text('Please sign in to continue!',
-                style:Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color:Color.fromARGB(225,250, 241, 228),) ,),),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Please sign in to continue!',
+                  style:Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color:Color.fromARGB(225,250, 241, 228),) ,),
+            ),),
               Card(
                 color:Color.fromARGB(225,236, 227, 206),
                 margin:EdgeInsets.all(12) ,

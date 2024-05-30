@@ -1,11 +1,17 @@
 import 'package:detecto_app/screens/camera/ImageDisplayScreen.dart';
+import 'package:detecto_app/screens/model/AiModel.dart';
+import 'package:detecto_app/screens/model/ColorModel.dart';
+import 'package:detecto_app/screens/news/news-screen.dart';
+import 'package:detecto_app/screens/text_recognition/TextRecognition.dart';
+//import 'package:detecto_app/screens/news/news-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class CustomRow extends StatefulWidget {
     bool cameraNeed;
-   CustomRow({required this.text,required this.cameraNeed});
+    bool ocr;
+   CustomRow({required this.text,required this.cameraNeed,required this.ocr});
   String text;
 
   @override
@@ -15,16 +21,27 @@ class CustomRow extends StatefulWidget {
 class _CustomRowState extends State<CustomRow> {
   bool isImageSelected = false;
   File? selectedImage;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ElevatedButton(
         onPressed: (){
-        if(widget.cameraNeed==true){
-          pickImageFromCamera();
+
+          if(widget.cameraNeed==true&&widget.ocr==true){
+            Navigator.pushNamed(context, TextRecognition.routName);
+          }else if(widget.cameraNeed==true&&widget.ocr==false){
+            Navigator.pushNamed(context, AiModel.routeName);
+          }else{
+            Navigator.pushNamed(context, ColorModel.routeName);
+          }
+        // (widget.cameraNeed==true)?
+        //   pickImageFromCamera():
+        //   Navigator.pushNamed(context, NewsScreen.routeName);
+
          //Navigator.pushNamed(context, CameraScreen.routeName,arguments: selectedImage);
-        }
+
         },
         style:ElevatedButton.styleFrom(
             backgroundColor: Color.fromARGB(225,67, 83, 52),
@@ -52,7 +69,7 @@ class _CustomRowState extends State<CustomRow> {
         selectedImage= File(returnedImage.path);
         isImageSelected = true;
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => ImageDisplayScreen(image: returnedImage)));
+            .push(MaterialPageRoute(builder: (_) => AiModel()));
       });}
   }
 

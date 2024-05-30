@@ -1,6 +1,9 @@
 
 import 'package:detecto_app/screens/camera/ImageDisplayScreen.dart';
+import 'package:detecto_app/screens/model/AiModel.dart';
+import 'package:detecto_app/screens/model/ColorModel.dart';
 import 'package:detecto_app/screens/news/news-screen.dart';
+import 'package:detecto_app/screens/text_recognition/TextRecognition.dart';
 import 'package:flutter/material.dart';
 import 'screens/auth/login/LoginScreen.dart';
 import 'screens/home/HomeScreen.dart';
@@ -23,10 +26,13 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName:(context)=>LoginScreen(),
         HomeScreen.routeName:(context)=>HomeScreen(),
         NewsScreen.routeName:(context)=>NewsScreen(),
-       // CameraScreen.routeName:(context) => CameraScreen(),
+        TextRecognition.routName:(context) => TextRecognition(),
+        AiModel.routeName:(context) => AiModel(),
+        ColorModel.routeName:(context) => ColorModel()
+
+        //CameraScreen.routeName:(context) => CameraScreen(),
 
       },
     );
   }
 }
-

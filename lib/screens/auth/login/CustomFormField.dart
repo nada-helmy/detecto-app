@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 class CustomTextFormfield extends StatelessWidget {
 
   CustomTextFormfield({required this.hinttext,required this.icon});
   String hinttext;
   IconData icon;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,6 +26,11 @@ class CustomTextFormfield extends StatelessWidget {
             fontSize: 30,
             fontWeight: FontWeight.w400
           ),
+          suffixIcon:InkWell(
+              onTap: () {
+
+              },
+              child: Icon(Icons.mic)) ,
           filled: true,
           fillColor: Color.fromARGB(225,236, 227, 206),
           border: OutlineInputBorder(
