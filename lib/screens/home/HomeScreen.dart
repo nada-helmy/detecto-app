@@ -21,7 +21,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   FlutterTts ftts = FlutterTts();
  @override
   void initState(){
@@ -112,32 +111,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-       appBar: AppBar(
-           title: Text('Detecto',
-
-       )),
-
+       appBar: AppBar(title: Text('Detecto')),
       body: Padding(
         padding: const EdgeInsets.all(6.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height:height*.01 ,),
-              Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Text('''Welcome!                                How can I help you!''',
-                     style:Theme.of(context).textTheme.bodyLarge!
-                 .copyWith(color: Color.fromARGB(225,67, 83, 52),fontSize:36 )),
-              ),
-              //SizedBox(height:height*.002,),
-          
-              SizedBox(height:height*.02 ,),
-              //  FloatingActionButton(
-              //   onPressed:()
-              //
-              //   child: Icon(widget.isListening ? Icons.mic : Icons.mic_none),
-              // ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height:height*.01 ,),
+            GestureDetector(
+              onTap:() {
+
+                speak('''Welcome!How can I help you!''');
+              },
+           child: Text('''Welcome!                                How can I help you!''',
+                style:Theme.of(context).textTheme.bodyLarge!
+            .copyWith(color: Color.fromARGB(225,67, 83, 52),fontSize:38 )),),
+            //SizedBox(height:height*.002,),
 
               Padding(
                 padding: const EdgeInsets.only(left:250),
@@ -165,51 +154,51 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height:height*.02 ,),
               GestureDetector(
                   onTap:() {
-          
+
                     speak('Read Me');
                     },
                  child: AddressWidget(text: 'Read Me'),),
               CustomRow(text: 'Open Camera',cameraNeed: true,ocr: true,colors: false,),
           GestureDetector(
             onTap:() {
-          
+
               speak('Around Me');
             },
-          
+
             child:AddressWidget(text: 'Around Me',)),
               CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,colors: false,),
           GestureDetector(
             onTap:() {
-          
+
               speak('News');
             },
-          
+
             child: AddressWidget(text: 'News',)),
               CustomRow(text: 'News',cameraNeed: false,ocr: false,colors: false,),
-          
+
               SizedBox(height:height*.02 ,),
               GestureDetector(
                 onTap:() {
-          
+
                   speak('Colors');
                 },
                 child: AddressWidget(text: 'Colors'),),
               CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,colors: true,),
-          
+
               SizedBox(height:height*.02 ,),
               GestureDetector(
                 onTap:() {
-          
+
                   speak('cash reader');
                 },
                 child: AddressWidget(text: 'Cash Reader'),),
-              CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,colors: false,),
-          
+              CustomRow(text: 'Open Camera', cameraNeed: true,ocr: false,colors: false,),
+
               SizedBox(height:height*.02 ,),
 
 
 
-          
+
               // GestureDetector(
               //     onTap:() {
               //
@@ -221,8 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
   void speak(String text)async{
     await ftts.setLanguage("en-US");
@@ -232,6 +220,5 @@ class _HomeScreenState extends State<HomeScreen> {
     //play text to sp
     await ftts.speak(text);
   }
-
 }
 

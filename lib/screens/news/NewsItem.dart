@@ -4,6 +4,8 @@ import 'package:detecto_app/utils/appcolor.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/NewsResponse.dart';
+import 'NewsDetails.dart';
+import 'news-details.dart';
 
 class NewsItem extends StatelessWidget {
   NewsItem({required this.news});

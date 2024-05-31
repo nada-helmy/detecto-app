@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270911785468",
+    "project_id": "detecto-901b9",
+    "storage_bucket": "detecto-901b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270911785468:android:b99090f2d9ee3a77af0a79",
+        "android_client_info": {
+          "package_name": "com.example.detecto_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcgQ9MTNmK5cj8cf9bniWiMj97zAFbFnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

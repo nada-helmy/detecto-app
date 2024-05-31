@@ -8,13 +8,11 @@ class ImageDisplayScreen extends StatefulWidget {
   static const String routeName='camera';
   const ImageDisplayScreen({super.key, required this.image,});
   final XFile image;
-
   @override
   State<ImageDisplayScreen> createState() => _ImageDisplayScreenState();
 }
 
 class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
-
 
 
   @override
