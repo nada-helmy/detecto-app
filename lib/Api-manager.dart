@@ -36,7 +36,7 @@ class ApiManager{
     Uri url=Uri.https(baseUrl,newsApi, {
       'apiKey': '9d5c971e2891457e9aeabccb94a7a263',
       'sources': sourceId,
-      'q':'bitcoin'
+      'q':'football'
     });
     try{
       var response= await http.get(url);

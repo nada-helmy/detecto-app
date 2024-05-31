@@ -3,6 +3,8 @@ import 'package:detecto_app/utils/appcolor.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/NewsResponse.dart';
+import 'NewsDetails.dart';
+import 'news-details.dart';
 
 class NewsItem extends StatelessWidget {
   NewsItem({required this.news});
@@ -24,24 +26,29 @@ class NewsItem extends StatelessWidget {
               width: 3
             )
           ),
-          child:Column(
-            children: [
-              Container(
-               clipBehavior: Clip.antiAlias,
-               decoration: BoxDecoration(
-                 borderRadius: BorderRadius.circular(22),),
-                child: CachedNetworkImage(
-                  imageUrl: news.urlToImage??'',
-                  placeholder: (context, url) => Center(
-                      child: CircularProgressIndicator(
-                        color: Appcolor.darkgreen,
-                      )),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+          child:InkWell(
+            onTap: () {
+              Navigator.pushNamed(context,Newsdetails1.routeName,arguments:News??'' );
+            },
+            child: Column(
+              children: [
+                Container(
+                 clipBehavior: Clip.antiAlias,
+                 decoration: BoxDecoration(
+                   borderRadius: BorderRadius.circular(22),),
+                  child: CachedNetworkImage(
+                    imageUrl: news.urlToImage??'',
+                    placeholder: (context, url) => Center(
+                        child: CircularProgressIndicator(
+                          color: Appcolor.darkgreen,
+                        )),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
                 ),
-              ),
-              Text(news.title??'',style:Theme.of(context).textTheme.bodyMedium!
-                  .copyWith(color:Appcolor.darkgreen,fontSize:30 )),
-            ],
+                Text(news.title??'',style:Theme.of(context).textTheme.bodyMedium!
+                    .copyWith(color:Appcolor.darkgreen,fontSize:30 )),
+              ],
+            ),
           ) ,
         ),
       ],

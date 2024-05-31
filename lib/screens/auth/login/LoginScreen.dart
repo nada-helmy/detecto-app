@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../home/HomeScreen.dart';
-import 'CustomFormField.dart';
+import '../CustomFormField.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 
@@ -22,13 +22,13 @@ class LoginScreen extends StatelessWidget {
            child: Column(
             children: [
              SizedBox(height: height*.05,),
-          GestureDetector(
-            onTap:() {
+            GestureDetector(
+             onTap:() {
 
               speak('Please sign in to continue!');
-            },
+             },
 
-            child: Text('Please sign in to continue!',
+             child: Text('Please sign in to continue!',
                 style:Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color:Color.fromARGB(225,250, 241, 228),) ,),),
               Card(
@@ -47,20 +47,29 @@ class LoginScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               CustomTextFormfield(
+                                validatorfunc: (p0) {
+
+                                },
                                   hinttext: "User Name",
                                   icon: Icons.person),
                               CustomTextFormfield(
                                 hinttext: ' Email',
+                                validatorfunc: (p0) {
+
+                                },
                                 icon:Icons.email_outlined ,
                               ),
                               CustomTextFormfield(
+                                validatorfunc: (p0) {
+
+                                },
                                 hinttext: ' Password',
                                 icon:Icons.password_outlined ,
                               ),
                             ],
                           )),
                       SizedBox(height: height*.07 ,),
-                  ElevatedButton(
+                   ElevatedButton(
                     style:ElevatedButton.styleFrom(
                       backgroundColor:  Color.fromARGB(225,236, 227, 206),
                       shape: RoundedRectangleBorder(

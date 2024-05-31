@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:detecto_app/screens/home/CustomRow.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -22,15 +20,10 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
       appBar: AppBar(title: Text('Detecto')),
       body:  Column(
         children: [
-
-
-               Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child:  Image.file(File(widget.image.path)))
+               Expanded(child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child:  Image.file(File(widget.image.path)))
             ),
-
-
         ],
       ),
     );
