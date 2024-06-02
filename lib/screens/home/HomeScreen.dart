@@ -1,10 +1,18 @@
 import 'package:detecto_app/screens/home/AddressWidget.dart';
 import 'package:detecto_app/screens/home/CustomRow.dart';
+import 'package:detecto_app/screens/model/AiModel.dart';
+import 'package:detecto_app/screens/model/ColorModel.dart';
+import 'package:detecto_app/screens/news/NewsScreen.dart';
+import 'package:detecto_app/screens/text_recognition/TextRecognition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 
 class HomeScreen extends StatefulWidget {
+  late SpeechToText speech;
+  bool isListening=false;
+  String recognizedText='';
   //const HomeScreen({super.key});
   static const String routeName = 'home';
 
@@ -15,13 +23,100 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   FlutterTts ftts = FlutterTts();
+ @override
+  void initState(){
+    super.initState();
+    ftts.speak('Welcome to detecto app     please press on mic    and say what you want');
+
+
+    initSpeechToText();
+  }
+
+
+  Future<void> initSpeechToText() async{
+    widget.speech=SpeechToText();
+    bool available=await widget.speech.initialize();
+    if(available){
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+
+  void startListening()async{
+    if (!widget.isListening) {
+      bool available = await widget.speech.initialize();
+      if (available) {
+        setState(() => widget.isListening = true);
+        widget.speech.listen(
+          onResult: (result) {
+            setState(() => widget.recognizedText = result.recognizedWords);
+            _navigateToScreen(widget.recognizedText);
+            // Implement logic for screen navigation based on recognized text
+            // ...
+          },
+        );
+      }
+    }
+  }
+
+  void stopListening(){
+    if(widget.isListening){
+      widget.speech.stop();
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+
+  void _navigateToScreen(String recognizedText) {
+    switch (recognizedText) {
+      case 'read':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TextRecognition()),
+        );
+        break;
+      case 'colour'|| 'color':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ColorModel()),
+        );
+        break;
+      case 'news':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => NewsScreen()),
+        );
+        break;
+
+      case 'around':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AiModel()),
+        );
+        break;
+
+    // Add more cases for other screens
+    // ...
+      default:
+      // Handle unrecognized speech or show an error message
+        break;
+    }
+  }
+
+
 
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-       appBar: AppBar(title: Text('Detecto')),
+       appBar: AppBar(
+           title: Text('Detecto',
+
+       )),
+
       body: Padding(
         padding: const EdgeInsets.all(6.0),
         child: SingleChildScrollView(
@@ -29,27 +124,52 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(height:height*.01 ,),
-              GestureDetector(
-                onTap:() {
-          
-                  speak('''Welcome!How can I help you!''');
-                },
-             child: Padding(
-               padding: const EdgeInsets.all(6.0),
-               child: Text('''Welcome!                                How can I help you!''',
-                    style:Theme.of(context).textTheme.bodyLarge!
-                .copyWith(color: Color.fromARGB(225,67, 83, 52),fontSize:36 )),
-             ),),
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Text('''Welcome!                                How can I help you!''',
+                     style:Theme.of(context).textTheme.bodyLarge!
+                 .copyWith(color: Color.fromARGB(225,67, 83, 52),fontSize:36 )),
+              ),
               //SizedBox(height:height*.002,),
           
+              SizedBox(height:height*.02 ,),
+              //  FloatingActionButton(
+              //   onPressed:()
+              //
+              //   child: Icon(widget.isListening ? Icons.mic : Icons.mic_none),
+              // ),
+
+              Padding(
+                padding: const EdgeInsets.only(left:250),
+                child: ElevatedButton(
+                  onPressed: ()
+                    {if( widget.isListening ){
+                      stopListening();
+                     }else{
+                      startListening();
+
+                    }
+                  },
+                  child: Icon(widget.isListening ? Icons.mic : Icons.mic_none), // icon of the button
+                  style: ElevatedButton.styleFrom( // styling the button
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(20),
+                    backgroundColor: Color.fromARGB(225,67, 83, 52), // Button color
+                    foregroundColor: Color.fromARGB(225,250, 241, 228), // Splash color
+                  ),
+                ),
+              ),
+
+
+
               SizedBox(height:height*.02 ,),
               GestureDetector(
                   onTap:() {
           
-                    speak('SuperMarket');
+                    speak('Read Me');
                     },
-                 child: AddressWidget(text: 'SuperMarket'),),
-              CustomRow(text: 'Open Camera',cameraNeed: true,ocr: true,),
+                 child: AddressWidget(text: 'Read Me'),),
+              CustomRow(text: 'Open Camera',cameraNeed: true,ocr: true,colors: false,),
           GestureDetector(
             onTap:() {
           
@@ -57,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           
             child:AddressWidget(text: 'Around Me',)),
-              CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,),
+              CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,colors: false,),
           GestureDetector(
             onTap:() {
           
@@ -65,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           
             child: AddressWidget(text: 'News',)),
-              CustomRow(text: 'News',cameraNeed: false,ocr: false,),
+              CustomRow(text: 'News',cameraNeed: false,ocr: false,colors: false,),
           
               SizedBox(height:height*.02 ,),
               GestureDetector(
@@ -74,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   speak('Colors');
                 },
                 child: AddressWidget(text: 'Colors'),),
-              CustomRow(text: 'Open Camera',cameraNeed: true,ocr: true,),
+              CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,colors: true,),
           
               SizedBox(height:height*.02 ,),
               GestureDetector(
@@ -83,16 +203,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   speak('cash reader');
                 },
                 child: AddressWidget(text: 'Cash Reader'),),
-              CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,),
+              CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,colors: false,),
           
               SizedBox(height:height*.02 ,),
-              GestureDetector(
-                onTap:() {
-          
-                  speak('read me');
-                },
-                child: AddressWidget(text: 'Read Me'),),
-              CustomRow(text: 'Open Camera',cameraNeed: true,ocr: true,),
+
 
 
           
@@ -112,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   void speak(String text)async{
     await ftts.setLanguage("en-US");
-    await ftts.setSpeechRate(0.5); //speed of speech
+    await ftts.setSpeechRate(0.3); //speed of speech
     await ftts.setVolume(1.0); //volume of speech
     await ftts.setPitch(1);//pitc of sound
     //play text to sp

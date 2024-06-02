@@ -17,7 +17,11 @@ class _AiModelState extends State<AiModel> {
   File? image;
   String? body;
 
-
+  @override
+  void initState(){
+    super.initState();
+    ftts.speak('welcome to around me ');
+  }
   Future takeImage () async{
     final myFile=await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
@@ -45,7 +49,7 @@ class _AiModelState extends State<AiModel> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Object Detection"),
+        title: const Text("Around Me"),
       ),
       body: Center(
         child: SingleChildScrollView(

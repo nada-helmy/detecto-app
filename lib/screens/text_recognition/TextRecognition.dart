@@ -22,11 +22,16 @@ class _TextRecognitionState extends State<TextRecognition> {
   String scannedText = "";
 
   @override
+  void initState(){
+    super.initState();
+    ftts.speak('welcome to read me ');
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Text Recognition "),
+        title: const Text("Read Me "),
       ),
       body: Center(
           child: SingleChildScrollView(
@@ -169,10 +174,7 @@ class _TextRecognitionState extends State<TextRecognition> {
     setState(() {});
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+
 
   void speak(String text)async{
     await ftts.setLanguage("en-US");

@@ -1,9 +1,9 @@
 import 'package:detecto_app/screens/camera/ImageDisplayScreen.dart';
 import 'package:detecto_app/screens/model/AiModel.dart';
 import 'package:detecto_app/screens/model/ColorModel.dart';
-import 'package:detecto_app/screens/news/news-screen.dart';
+import 'package:detecto_app/screens/news/NewsScreen.dart';
 import 'package:detecto_app/screens/text_recognition/TextRecognition.dart';
-//import 'package:detecto_app/screens/news/news-screen.dart';
+//import 'package:detecto_app/screens/news/NewsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -11,7 +11,8 @@ import 'dart:io';
 class CustomRow extends StatefulWidget {
     bool cameraNeed;
     bool ocr;
-   CustomRow({required this.text,required this.cameraNeed,required this.ocr});
+    bool colors;
+   CustomRow({required this.text,required this.cameraNeed,required this.ocr,required this.colors});
   String text;
 
   @override
@@ -33,8 +34,11 @@ class _CustomRowState extends State<CustomRow> {
             Navigator.pushNamed(context, TextRecognition.routName);
           }else if(widget.cameraNeed==true&&widget.ocr==false){
             Navigator.pushNamed(context, AiModel.routeName);
-          }else{
+          }else if(widget.cameraNeed==true&&widget.colors==true){
             Navigator.pushNamed(context, ColorModel.routeName);
+          }
+          else{
+            Navigator.pushNamed(context, NewsScreen.routeName);
           }
         // (widget.cameraNeed==true)?
         //   pickImageFromCamera():

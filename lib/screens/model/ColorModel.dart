@@ -17,7 +17,11 @@ class _ColorModelState extends State<ColorModel> {
   File? image;
   String? body;
 
-
+  @override
+  void initState(){
+    super.initState();
+    ftts.speak('welcome to color detection  page');
+  }
   Future takeImage () async{
     final myFile=await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
@@ -83,4 +87,6 @@ class _ColorModelState extends State<ColorModel> {
     //play text to sp
     await ftts.speak(text);
   }
+
+
 }

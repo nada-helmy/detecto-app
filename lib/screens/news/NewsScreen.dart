@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 import '../../Api-manager.dart';
 import '../../models/NewsResponse.dart';
@@ -6,10 +7,24 @@ import '../../models/SourceResponse.dart';
 import '../../utils/appcolor.dart';
 import 'NewsItem.dart';
 
-class NewsScreen extends StatelessWidget {
+class NewsScreen extends StatefulWidget {
   static const String routeName='newscon';
+
+  @override
+  State<NewsScreen> createState() => _NewsScreenState();
+}
+
+class _NewsScreenState extends State<NewsScreen> {
   //NewsContainer({required this.source});
   Source? source;
+
+  FlutterTts ftts = FlutterTts();
+  @override
+  void initState(){
+    super.initState();
+    ftts.speak('welcom to News page');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,5 +55,14 @@ class NewsScreen extends StatelessWidget {
               },
             itemCount: newsList.length,);
         },));
+  }
+
+  void speak(String text)async{
+    await ftts.setLanguage("en-US");
+    await ftts.setSpeechRate(0.5); //speed of speech
+    await ftts.setVolume(1.0); //volume of speech
+    await ftts.setPitch(1);//pitc of sound
+    //play text to sp
+    await ftts.speak(text);
   }
 }

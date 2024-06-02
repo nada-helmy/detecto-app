@@ -2,7 +2,7 @@
 import 'package:detecto_app/screens/camera/ImageDisplayScreen.dart';
 import 'package:detecto_app/screens/model/AiModel.dart';
 import 'package:detecto_app/screens/model/ColorModel.dart';
-import 'package:detecto_app/screens/news/news-screen.dart';
+import 'package:detecto_app/screens/news/NewsScreen.dart';
 import 'package:detecto_app/screens/text_recognition/TextRecognition.dart';
 import 'package:flutter/material.dart';
 import 'screens/auth/login/LoginScreen.dart';

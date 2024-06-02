@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-class CustomTextFormfield extends StatelessWidget {
-
-  CustomTextFormfield({required this.hinttext,required this.icon});
+class CustomTextFormfield extends StatefulWidget {
+  // final userNameController = TextEditingController();
+  // final emailController = TextEditingController();
+  // final passwordController = TextEditingController();
+  CustomTextFormfield({required this.hinttext,required this.icon,required this.controller,required this.sufIcon});
   String hinttext;
   IconData icon;
+  IconButton sufIcon;
+  TextEditingController controller;
+  @override
+  State<CustomTextFormfield> createState() => _CustomTextFormfieldState();
+}
+
+class _CustomTextFormfieldState extends State<CustomTextFormfield> {
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +29,18 @@ class CustomTextFormfield extends StatelessWidget {
           color:Color.fromARGB(225,206, 222, 189),
           fontSize: 25
         ),
+        controller: widget.controller,
         decoration: InputDecoration(
-          prefixIcon:Icon(icon) ,
-          hintText:hinttext,
+
+          prefixIcon:Icon(widget.icon) ,
+          hintText:widget.hinttext,
           hintStyle: TextStyle(
             color: Color.fromARGB(225, 58, 77, 57),
             fontSize: 30,
             fontWeight: FontWeight.w400
           ),
-          suffixIcon:InkWell(
-              onTap: () {
+          suffixIcon: widget.sufIcon,
 
-              },
-              child: Icon(Icons.mic)) ,
           filled: true,
           fillColor: Color.fromARGB(225,236, 227, 206),
           border: OutlineInputBorder(

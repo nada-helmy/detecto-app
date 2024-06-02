@@ -1,15 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import '../../home/HomeScreen.dart';
 import 'CustomFormField.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  late SpeechToText speech;
+  bool isListening=false;
+  String recognizedText='';
+
+  late final userNameController = TextEditingController();
+  late final emailController = TextEditingController();
+  late final passwordController = TextEditingController();
  // const LoginScreen({super.key});
 
   static const String routeName = 'login';
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   FlutterTts ftts = FlutterTts();
+
+  void initState(){
+    super.initState();
+    initSpeechToText();
+  }
+
+
+  Future<void> initSpeechToText() async{
+    widget.speech=SpeechToText();
+    bool available=await widget.speech.initialize();
+    if(available){
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+
+  void startListening(){
+    widget.speech.listen(onResult: (result){
+      setState(() {
+        widget.recognizedText=result.recognizedWords;
+      });
+      setState(() {
+        widget.isListening=true;
+      });
+    });
+  }
+
+  void stopListening(){
+    if(widget.isListening){
+      widget.speech.stop();
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +100,27 @@ class LoginScreen extends StatelessWidget {
                             children: [
                               CustomTextFormfield(
                                   hinttext: "User Name",
-                                  icon: Icons.person),
+                                  icon: Icons.person,
+                                  controller: widget.userNameController,
+                                  sufIcon: IconButton(onPressed: () {
+                                   if(widget.isListening){
+                                     stopListening();
+                                   }else{
+                                     startListening();
+                                   }
+                                  }, icon:Icon(Icons.mic)),
+                                ),
                               CustomTextFormfield(
                                 hinttext: ' Email',
                                 icon:Icons.email_outlined ,
+                                controller: widget.emailController,
+                                  sufIcon:  IconButton(onPressed: () {  }, icon:Icon(Icons.mic))
                               ),
                               CustomTextFormfield(
                                 hinttext: ' Password',
                                 icon:Icons.password_outlined ,
+                                controller: widget.passwordController,
+                                  sufIcon:  IconButton(onPressed: () {  }, icon:Icon(Icons.mic))
                               ),
                             ],
                           )),
@@ -74,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                         Navigator.of(context)
                             .pushNamed(HomeScreen.routeName);
 
-                          speak('Successfully Login');
+                          //speak('Successfully Login');
 
                       } ,
                         child:
