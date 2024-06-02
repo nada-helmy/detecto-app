@@ -5,6 +5,7 @@ import '../../models/NewsResponse.dart';
 import '../../utils/appcolor.dart';
 
 class NewsDetailedItem extends StatelessWidget {
+
    NewsDetailedItem({super.key,required this.news});
    //String? txt;
   News news;

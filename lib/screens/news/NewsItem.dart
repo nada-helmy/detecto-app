@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:detecto_app/screens/news/category/CategoryDetails.dart';
 import 'package:detecto_app/utils/appcolor.dart';
 import 'package:flutter/material.dart';
 
@@ -7,10 +6,15 @@ import '../../models/NewsResponse.dart';
 import 'NewsDetails.dart';
 import 'news-details.dart';
 
-class NewsItem extends StatelessWidget {
+class NewsItem extends StatefulWidget {
   NewsItem({required this.news});
   News news;
 
+  @override
+  State<NewsItem> createState() => _NewsItemState();
+}
+
+class _NewsItemState extends State<NewsItem> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,7 +42,7 @@ class NewsItem extends StatelessWidget {
                  decoration: BoxDecoration(
                    borderRadius: BorderRadius.circular(22),),
                   child: CachedNetworkImage(
-                    imageUrl: news.urlToImage??'',
+                    imageUrl: widget.news.urlToImage??'',
                     placeholder: (context, url) => Center(
                         child: CircularProgressIndicator(
                           color: Appcolor.darkgreen,
@@ -46,7 +50,7 @@ class NewsItem extends StatelessWidget {
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
-                Text(news.title??'',style:Theme.of(context).textTheme.bodyMedium!
+                Text(widget.news.title??'',style:Theme.of(context).textTheme.bodyMedium!
                     .copyWith(color:Appcolor.darkgreen,fontSize:30 )),
               ],
             ) ,
