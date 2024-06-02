@@ -15,7 +15,6 @@ class HomeScreen extends StatefulWidget {
   String recognizedText='';
   //const HomeScreen({super.key});
   static const String routeName = 'home';
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }

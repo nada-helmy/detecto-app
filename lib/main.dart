@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: Mytheme.light,
       debugShowCheckedModeBanner: false,
-      initialRoute: RegisterScreen.routeName,
+      initialRoute: NewsScreen.routeName,
       routes: {
         LoginScreen.routeName:(context)=>LoginScreen(),
         RegisterScreen.routeName:(context)=>RegisterScreen(),
