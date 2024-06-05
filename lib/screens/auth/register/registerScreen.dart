@@ -1,16 +1,22 @@
 import 'package:detecto_app/api_test.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import '../../../firebase/Firebase_funcs.dart';
 import '../../../firebase/classmodel.dart';
+import '../../../voiceUtilites/TtsClass.dart';
 import '../../home/HomeScreen.dart';
-import 'package:alert_dialog/alert_dialog.dart';
+
 import '../CustomFormField.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+
 import 'package:http/http.dart' as http;
 
 
 class RegisterScreen extends StatefulWidget {
+  late SpeechToText speech;
+  bool isListening=false;
+  String recognizedText='';
   // const LoginScreen({super.key});
 
   static const String routeName = 'reg';
@@ -20,7 +26,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  FlutterTts ftts = FlutterTts();
+  TtsClass reader=TtsClass();
+
 
   var emailcontroller=TextEditingController() ;
 
@@ -29,6 +36,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var usernamecontroller=TextEditingController() ;
 
   var formkey=GlobalKey<FormState>();
+
+  var registered;
 
   Future<void> _register() async {
     final Uri uri = Uri.parse('http://localhost:3000/api/users/register');
@@ -53,6 +62,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     }
   }
+  @override
+ void initState(){
+    super.initState();
+    reader.speak('Please sign in to continue!');
+
+    initSpeechToText();
+    check();
+  }
+
+  Future<void> initSpeechToText() async{
+    widget.speech=SpeechToText();
+    bool available=await widget.speech.initialize();
+    if(available){
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+
+  void startListening(String text)async{
+    if (!widget.isListening) {
+      bool available = await widget.speech.initialize();
+      if (available) {
+        setState(() => widget.isListening = true);
+        widget.speech.listen(
+          onResult: (result) {
+            setState((){ widget.recognizedText = result.recognizedWords;
+            text=widget.recognizedText;});
+
+          },
+        );
+      }
+    }
+  }
+
+
+  void stopListening(){
+    if(widget.isListening){
+      widget.speech.stop();
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +122,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 GestureDetector(
                   onTap:() {
 
-                    speak('Please fill the data');
+                    reader.speak('Please sign in to continue!');
                   },
 
-                  child: Text('Please fill the data!',
+                  child: Text('Please sign in to continue!',
                     style:Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color:Color.fromARGB(225,250, 241, 228),) ,),),
                 Card(
@@ -85,25 +139,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          SizedBox(height: height*.07,),
+                          //SizedBox(height: height*.07,),
+
                           Form(
                             key:formkey ,
                               child: Column(
                                 children: [
-                                  CustomTextFormfield(
-                                    hinttext: "Username",
-                                    validatorfunc:(username) {
-                                      if (username==null || username.trim().isEmpty) {
-                                        return 'required field';
-                                      }
-                                      return null;
-                                    },
-                                    controller:usernamecontroller ,
-                                    icon:Icons.person,
-                                  ),
+
+                                    CustomTextFormfield(
+                                      hinttext: "Username",
+
+                                      validatorfunc:(username) {
+                                        if (username==null || username.trim().isEmpty) {
+                                          return 'required field';
+                                        }
+                                        return null;
+                                      },
+                                      controller:usernamecontroller ,
+                                      icon:Icons.person,
+                                      // sufIcon:IconButton(onPressed: (){
+                                      //   if( widget.isListening ){
+                                      //     stopListening();
+                                      //   }else{
+                                      //     startListening(usernamecontroller.text);
+                                      //
+                                      //
+                                      //   }
+                                      // },icon:Icon(widget.isListening ? Icons.mic : Icons.mic_none) ,iconSize: 25,)
+
+
+                                    ),
+
+
+
+                                  // SizedBox(height: height*.03,),
                                   CustomTextFormfield(
                                     hinttext: ' Email',
                                     icon:Icons.email_outlined ,
+
+
                                     controller:emailcontroller ,
                                     validatorfunc:(text) {
                                       if (text==null || text.trim().isEmpty) {
@@ -119,8 +193,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     },
                                     keyboardType:TextInputType.emailAddress ,
                                   ),
+                                 // SizedBox(height: height*.03,),
                                   CustomTextFormfield(
                                     hinttext: ' Password',
+
                                     controller:passcontroller ,
                                     securetxt: true,
                                     validatorfunc:(pass) {
@@ -133,7 +209,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       return null;
                                     },
                                     icon:Icons.lock_outline_rounded ,
+
                                   ),
+
                                 ],
                               )),
                           SizedBox(height: height*.07 ,),
@@ -144,7 +222,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                 )
                             ),
-                            onPressed:(){
+                            onPressed:()async{
+                              SharedPreferences pref =
+                                  await SharedPreferences.getInstance();
+                              pref.setBool('Isregestered',true);
                               register();
                             } ,
                             child:
@@ -154,6 +235,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           SizedBox(height: height*.04),
+                          Text(widget.recognizedText,style: TextStyle(color: Colors.black),),
                         ],
                       ),
                     )
@@ -164,14 +246,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ));
   }
 
-  void speak(String text)async{
-    await ftts.setLanguage("en-US");
-    await ftts.setSpeechRate(0.5); //speed of speech
-    await ftts.setVolume(1.0); //volume of speech
-    await ftts.setPitch(1);//pitc of sound
-    //play text to sp
-    await ftts.speak(text);
-  }
+
+
 
   void register() async{
      if(formkey.currentState?.validate()==true){
@@ -184,15 +260,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
            emailcontroller.text, passcontroller.text,
             (){
                  FirebaseFunctions.addUser(user);
-                 speak('registered Successfully');
+                 reader.speak('registered Successfully');
                  Navigator.of(context)
-                     .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
+                     .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false,);
                },
             (message){
+             reader.speak(message);
              showDialog(context: context,
                  builder: (context) => AlertDialog(
                   title:Text('Error',style:Theme.of(context).textTheme.bodyLarge
                     !.copyWith(color:Colors.brown.shade400 )) ,
+
                   content:Text(message,style:Theme.of(context).textTheme.bodyMedium
                   !.copyWith(color:Colors.brown.shade600)) ,
                   actions: [
@@ -206,6 +284,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
      }
 
   }
+
+
+  Future<void> check() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    registered = pref.getBool('Isregestered');
+    if (registered) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
+    } else {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(RegisterScreen.routeName, (route) => false);
+    }}
 }
 
 

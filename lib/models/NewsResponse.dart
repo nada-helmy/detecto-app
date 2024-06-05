@@ -8,8 +8,8 @@ class NewsResponse {
   NewsResponse({
       this.status, 
       this.totalResults,
-    this.message,
-    this.code,
+      this.message,
+      this.code,
       this.articles,});
 
   NewsResponse.fromJson(dynamic json) {

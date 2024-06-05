@@ -6,7 +6,7 @@ class SourceResponse {
       this.status, 
       this.sources,
       this.message,
-       this.code
+      this.code
   });
 
   SourceResponse.fromJson(dynamic json) {

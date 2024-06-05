@@ -32,9 +32,9 @@ class _CustomRowState extends State<CustomRow> {
 
           if(widget.cameraNeed==true&&widget.ocr==true){
             Navigator.pushNamed(context, TextRecognition.routName);
-          }else if(widget.cameraNeed==true&&widget.ocr==false){
+          }else if(widget.cameraNeed==true&&widget.colors==false){
             Navigator.pushNamed(context, AiModel.routeName);
-          }else if(widget.cameraNeed==true&&widget.colors==true){
+          }else if(widget.cameraNeed==true&&widget.colors==true&&widget.ocr==false){
             Navigator.pushNamed(context, ColorModel.routeName);
           }
           else{

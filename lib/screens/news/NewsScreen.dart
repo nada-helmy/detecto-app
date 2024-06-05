@@ -1,3 +1,4 @@
+import 'package:detecto_app/voiceUtilites/TtsClass.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -17,12 +18,12 @@ class NewsScreen extends StatefulWidget {
 class _NewsScreenState extends State<NewsScreen> {
   //NewsContainer({required this.source});
   Source? source;
+  TtsClass reader=TtsClass();
 
-  FlutterTts ftts = FlutterTts();
   @override
   void initState(){
     super.initState();
-    ftts.speak('welcom to News page');
+    reader.speak('welcome to News page');
   }
 
   @override
@@ -57,12 +58,5 @@ class _NewsScreenState extends State<NewsScreen> {
         },));
   }
 
-  void speak(String text)async{
-    await ftts.setLanguage("en-US");
-    await ftts.setSpeechRate(0.5); //speed of speech
-    await ftts.setVolume(1.0); //volume of speech
-    await ftts.setPitch(1);//pitc of sound
-    //play text to sp
-    await ftts.speak(text);
-  }
+
 }

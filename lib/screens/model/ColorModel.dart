@@ -4,10 +4,16 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+
+import '../../voiceUtilites/TtsClass.dart';
 
 class ColorModel extends StatefulWidget {
+  late SpeechToText speech;
+  bool isListening=false;
+  String recognizedText='';
   static const String routeName='color';
-  const ColorModel({super.key});
+   ColorModel({super.key});
 
   @override
   State<ColorModel> createState() => _ColorModelState();
@@ -16,14 +22,79 @@ class ColorModel extends StatefulWidget {
 class _ColorModelState extends State<ColorModel> {
   File? image;
   String? body;
+  TtsClass reader=TtsClass();
 
   @override
   void initState(){
     super.initState();
-    ftts.speak('welcome to color detection  page');
+    reader.speak('welcome to color detection  page');
+    initSpeechToText();
   }
+
+  Future<void> initSpeechToText() async{
+    widget.speech=SpeechToText();
+    bool available=await widget.speech.initialize();
+    if(available){
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+
+  void startListening()async{
+    if (!widget.isListening) {
+      bool available = await widget.speech.initialize();
+      if (available) {
+        setState(() => widget.isListening = true);
+        widget.speech.listen(
+          onResult: (result) {
+            setState(() => widget.recognizedText = result.recognizedWords);
+            navigate(widget.recognizedText);
+
+
+          },
+        );
+      }
+    }
+  }
+
+  void stopListening(){
+    if(widget.isListening){
+      widget.speech.stop();
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+  void navigate(String recognizedText){
+    switch (recognizedText) {
+      case 'camera':
+        takePhoto();
+        reader.speak('take a photo');
+        break;
+
+      case 'answer':
+        uploadImage();
+
+        break;
+
+      default:
+      // Handle unrecognized speech or show an error message
+        break;
+    }
+  }
+
+
+
   Future takeImage () async{
     final myFile=await ImagePicker().pickImage(source: ImageSource.gallery);
+    setState(() {
+      image=File(myFile!.path);
+    });
+  }
+
+  Future takePhoto () async{
+    final myFile=await ImagePicker().pickImage(source: ImageSource.camera);
     setState(() {
       image=File(myFile!.path);
     });
@@ -37,11 +108,11 @@ class _ColorModelState extends State<ColorModel> {
     print(response.body);
     setState(() {
       body = response.body;
-      speak(body!);
+      reader.speak("${body??"no data"}");
     });
   }
 
-  FlutterTts ftts = FlutterTts();
+
 
 
   @override
@@ -51,17 +122,51 @@ class _ColorModelState extends State<ColorModel> {
         centerTitle: true,
         title: const Text("color"),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
+      body:
+          SingleChildScrollView(
+            child: Column(
+                    children: [
+
+                      Padding(
+                        padding: const EdgeInsets.only(left:250,top: 10),
+                        child: ElevatedButton(
+                          onPressed: ()
+                          {
+                            if( widget.isListening ){
+                              stopListening();
+                            }else{
+                              startListening();
+
+                            }
+                          },
+                          child: Icon(widget.isListening ? Icons.mic : Icons.mic_none), // icon of the button
+                          style: ElevatedButton.styleFrom( // styling the button
+                            shape: CircleBorder(),
+                            padding: EdgeInsets.all(20),
+                            backgroundColor: Color.fromARGB(225,67, 83, 52), // Button color
+                            foregroundColor: Color.fromARGB(225,250, 241, 228), // Splash color
+                          ),
+                        ),
+                      ),
+                      SizedBox(height:50),
+
+                  Center(
+                    child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              image==null? Text("image not found"):Image.file(image!),
+              image==null?
+              GestureDetector(
+                  onTap:() {
+
+                    reader.speak('Image Not found , please use the mic to use  camera');
+                  },
+                  child: Text("Image not found")):Image.file(image!),
+
               body==null?
               GestureDetector(
                   onTap:() {
-          
-                    speak('There is no data');
+
+                    reader.speak('There is no data');
                   },
                   child: Text("There is no data")):
               Text(body!),
@@ -70,23 +175,16 @@ class _ColorModelState extends State<ColorModel> {
                 children: [
                   TextButton(onPressed: ()=>(takeImage()), child: Text('upload')),
                   TextButton(onPressed: ()=>(uploadImage()), child: Text('predict')),
-          
+
                 ],
               )
             ],
-          ),
-        ),
-      ),
+                    ),
+                  ),]),
+          )
     );
   }
-  void speak(String text)async{
-    await ftts.setLanguage("en-US");
-    await ftts.setSpeechRate(0.5); //speed of speech
-    await ftts.setVolume(1.0); //volume of speech
-    await ftts.setPitch(1);//pitc of sound
-    //play text to sp
-    await ftts.speak(text);
-  }
+
 
 
 }

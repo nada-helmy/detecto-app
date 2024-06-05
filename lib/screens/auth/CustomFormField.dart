@@ -1,13 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class CustomTextFormfield extends StatelessWidget {
 
   CustomTextFormfield({required this.hinttext, this.icon,
     this.keyboardType=TextInputType.text, this.controller,
-  required this.validatorfunc,this.securetxt=false});
+  required this.validatorfunc,this.securetxt=false,this.sufIcon});
+
   String hinttext;
   IconData? icon;
+  IconButton? sufIcon;
   TextEditingController? controller;
   String? Function(String?) ?validatorfunc;
   TextInputType? keyboardType;
@@ -24,8 +28,13 @@ class CustomTextFormfield extends StatelessWidget {
           fontSize: 25
         ),
         controller: controller,
+
         decoration: InputDecoration(
+
+
           prefixIcon:Icon(icon,size:35 ,) ,
+          suffixIcon: sufIcon,
+
           hintText:hinttext,
           hintStyle: TextStyle(
             color: Color.fromARGB(225,58, 77, 57),

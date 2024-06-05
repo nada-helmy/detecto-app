@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import '../../../voiceUtilites/TtsClass.dart';
 import '../../home/HomeScreen.dart';
 import '../CustomFormField.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -22,7 +23,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  FlutterTts ftts = FlutterTts();
+  TtsClass reader=TtsClass();
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
           GestureDetector(
             onTap:() {
 
-              speak('Please sign in to continue!');
+              reader.speak('Please sign in to continue!');
             },
 
             child: Padding(
@@ -66,23 +68,32 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                   hinttext: "User Name",
                                   icon: Icons.person,
-                                  controller: widget.userNameController,
-                                  sufIcon: IconButton(onPressed: () {
 
-                                  }, icon:Icon(Icons.mic)),
-                                ),
+                                  controller: widget.userNameController,
+                                validatorfunc: (p0) {
+
+                                },
+
+                              ),
                               CustomTextFormfield(
                                 hinttext: ' Email',
 
                                 icon:Icons.email_outlined ,
+
                                 controller: widget.emailController,
-                                  sufIcon:  IconButton(onPressed: () {  }, icon:Icon(Icons.mic))
+                                validatorfunc: (p0) {
+
+                                },
+
                               ),
                               CustomTextFormfield(
                                 hinttext: ' Password',
+
                                 icon:Icons.password_outlined ,
                                 controller: widget.passwordController,
-                                  sufIcon:  IconButton(onPressed: () {  }, icon:Icon(Icons.mic))
+                                validatorfunc: (p0) {
+
+                                },
                               ),
                             ],
                           )),
@@ -98,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.of(context)
                             .pushNamed(HomeScreen.routeName);
 
-                          speak('Successfully Login');
+                          reader.speak('Successfully Login');
 
                       } ,
                         child:
@@ -118,12 +129,5 @@ class _LoginScreenState extends State<LoginScreen> {
     ));
   }
 
-  void speak(String text)async{
-    await ftts.setLanguage("en-US");
-    await ftts.setSpeechRate(0.5); //speed of speech
-    await ftts.setVolume(1.0); //volume of speech
-    await ftts.setPitch(1);//pitc of sound
-    //play text to sp
-    await ftts.speak(text);
-  }
+
 }
