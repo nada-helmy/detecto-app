@@ -1,5 +1,4 @@
 
-import 'package:detecto_app/screens/camera/ImageDisplayScreen.dart';
 import 'package:detecto_app/screens/model/AiModel.dart';
 import 'package:detecto_app/screens/model/ColorModel.dart';
 import 'package:detecto_app/screens/news/NewsScreen.dart';
@@ -34,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: Mytheme.light,
       debugShowCheckedModeBanner: false,
-      initialRoute: NewsScreen.routeName,
+      initialRoute: RegisterScreen.routeName,
       routes: {
         LoginScreen.routeName:(context)=>LoginScreen(),
         RegisterScreen.routeName:(context)=>RegisterScreen(),

@@ -24,6 +24,42 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   FlutterTts ftts = FlutterTts();
 
+  void initState(){
+    super.initState();
+    initSpeechToText();
+  }
+
+
+  Future<void> initSpeechToText() async{
+    widget.speech=SpeechToText();
+    bool available=await widget.speech.initialize();
+    if(available){
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+
+  void startListening(){
+    widget.speech.listen(onResult: (result){
+      setState(() {
+        widget.recognizedText=result.recognizedWords;
+      });
+      setState(() {
+        widget.isListening=true;
+      });
+    });
+  }
+
+  void stopListening(){
+    if(widget.isListening){
+      widget.speech.stop();
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -63,26 +99,31 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Column(
                             children: [
                               CustomTextFormfield(
+                                validatorfunc: (p0) {
 
+                                },
                                   hinttext: "User Name",
                                   icon: Icons.person,
                                   controller: widget.userNameController,
-                                  sufIcon: IconButton(onPressed: () {
 
-                                  }, icon:Icon(Icons.mic)),
                                 ),
                               CustomTextFormfield(
                                 hinttext: ' Email',
+                                validatorfunc: (p0) {
 
+                                },
                                 icon:Icons.email_outlined ,
                                 controller: widget.emailController,
-                                  sufIcon:  IconButton(onPressed: () {  }, icon:Icon(Icons.mic))
+
                               ),
                               CustomTextFormfield(
+                                validatorfunc: (p0) {
+
+                                },
                                 hinttext: ' Password',
                                 icon:Icons.password_outlined ,
                                 controller: widget.passwordController,
-                                  sufIcon:  IconButton(onPressed: () {  }, icon:Icon(Icons.mic))
+
                               ),
                             ],
                           )),
@@ -98,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.of(context)
                             .pushNamed(HomeScreen.routeName);
 
-                          speak('Successfully Login');
+                          //speak('Successfully Login');
 
                       } ,
                         child:

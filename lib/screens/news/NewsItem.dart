@@ -22,7 +22,7 @@ class _NewsItemState extends State<NewsItem> {
       children: [
         GestureDetector(
           onTap: (){
-            Navigator.pushNamed(context, CategoryDetails.routeName);
+            Navigator.pushNamed(context, Newsdetails1.routeName);
           },
           child: Container(
             margin: EdgeInsets.all(12),

@@ -113,19 +113,25 @@ class _HomeScreenState extends State<HomeScreen> {
        appBar: AppBar(title: Text('Detecto')),
       body: Padding(
         padding: const EdgeInsets.all(6.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height:height*.01 ,),
-            GestureDetector(
-              onTap:() {
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height:height*.01 ,),
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Text('''Welcome!                                How can I help you!''',
+                     style:Theme.of(context).textTheme.bodyLarge!
+                 .copyWith(color: Color.fromARGB(225,67, 83, 52),fontSize:36 )),
+              ),
+              //SizedBox(height:height*.002,),
 
-                speak('''Welcome!How can I help you!''');
-              },
-           child: Text('''Welcome!                                How can I help you!''',
-                style:Theme.of(context).textTheme.bodyLarge!
-            .copyWith(color: Color.fromARGB(225,67, 83, 52),fontSize:38 )),),
-            //SizedBox(height:height*.002,),
+              SizedBox(height:height*.02 ,),
+              //  FloatingActionButton(
+              //   onPressed:()
+              //
+              //   child: Icon(widget.isListening ? Icons.mic : Icons.mic_none),
+              // ),
 
               Padding(
                 padding: const EdgeInsets.only(left:250),
@@ -194,21 +200,9 @@ class _HomeScreenState extends State<HomeScreen> {
               CustomRow(text: 'Open Camera', cameraNeed: true,ocr: false,colors: false,),
 
               SizedBox(height:height*.02 ,),
-
-
-
-
-              // GestureDetector(
-              //     onTap:() {
-              //
-              //       speak('Text Recognition');
-              //     },
-              //
-              //     child: AddressWidget(text: 'Text Recognition',)),
-              // CustomRow(text: 'Text Recognition',cameraNeed: false)
             ],
           ),
-        ),
+        ),)
       );
   }
   void speak(String text)async{

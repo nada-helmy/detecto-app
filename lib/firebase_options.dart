@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBcgQ9MTNmK5cj8cf9bniWiMj97zAFbFnI',
-    appId: '1:270911785468:android:b99090f2d9ee3a77af0a79',
-    messagingSenderId: '270911785468',
-    projectId: 'detecto-901b9',
-    storageBucket: 'detecto-901b9.appspot.com',
+    apiKey: 'AIzaSyAlZkRSmU5O0KbP60wO12iwmkDifZ8lVX0',
+    appId: '1:771995713833:android:701e46c5a80fee45327738',
+    messagingSenderId: '771995713833',
+    projectId: 'gp-detecto-8dbab',
+    storageBucket: 'gp-detecto-8dbab.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCr5Pr8lOJMdfKz-J7RAfJecLIxMwXQgtI',
-    appId: '1:270911785468:ios:b267d9fca12ff4e7af0a79',
-    messagingSenderId: '270911785468',
-    projectId: 'detecto-901b9',
-    storageBucket: 'detecto-901b9.appspot.com',
+    apiKey: 'AIzaSyABDaEtV0781cvIkYp5EWPeRhGcnq2fvBM',
+    appId: '1:771995713833:ios:9ab2f10471591eda327738',
+    messagingSenderId: '771995713833',
+    projectId: 'gp-detecto-8dbab',
+    storageBucket: 'gp-detecto-8dbab.appspot.com',
     iosBundleId: 'com.example.detectoApp',
   );
+
 }
