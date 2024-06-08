@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:detecto_app/utils/appcolor.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -101,7 +102,7 @@ class _AiModelState extends State<AiModel> {
     if(image==null) return"";
     String base64=base64Encode(image!.readAsBytesSync());
     Map<String,String> requestHeaders={'Content-type':'application/json','Accept':'application/json'};
-    var response = await http.put(Uri.parse("http://10.0.2.2:5000/api"),body: base64,headers: requestHeaders);
+    var response = await http.put(Uri.parse("http://192.168.1.8:8080/api"),body: base64,headers: requestHeaders);
     print(response.body);
     setState(() {
        body = response.body;
@@ -162,7 +163,7 @@ class _AiModelState extends State<AiModel> {
                     reader.speak('There is no data');
                   },
                   child: Text("There is no data")):
-              Text(body!),
+              Text(body!,style: TextStyle(color:Appcolor.darkgreen),),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

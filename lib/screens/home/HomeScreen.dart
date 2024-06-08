@@ -1,9 +1,6 @@
-
-
 import 'package:detecto_app/screens/home/AddressWidget.dart';
 import 'package:detecto_app/screens/home/CustomRow.dart';
 import 'package:detecto_app/screens/model/AiModel.dart';
-import 'package:detecto_app/screens/model/CashModel.dart';
 import 'package:detecto_app/screens/model/ColorModel.dart';
 import 'package:detecto_app/screens/news/NewsScreen.dart';
 import 'package:detecto_app/screens/text_recognition/TextRecognition.dart';
@@ -104,19 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
         );
         break;
 
-      case 'cash':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => CashModel()),
-        );
-        break;
 
-    // Add more cases for other screens
-    // ...
-      default:
 
-      // Handle unrecognized speech or show an error message
-        break;
     }
   }
 
@@ -206,28 +192,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,colors: true,),
           
                 SizedBox(height:height*.02 ,),
-                GestureDetector(
-                  onTap:() {
-          
-                    reader.speak('cash reader');
-                  },
-                  child: AddressWidget(text: 'Cash Reader'),),
-                CustomRow(text: 'Open Camera', cameraNeed: true,ocr: false,colors: false,),
-          
-                SizedBox(height:height*.02 ,),
 
           
           
           
           
-                // GestureDetector(
-                //     onTap:() {
-                //
-                //       speak('Text Recognition');
-                //     },
-                //
-                //     child: AddressWidget(text: 'Text Recognition',)),
-                // CustomRow(text: 'Text Recognition',cameraNeed: false)
+
               ],
             ),
         ),
