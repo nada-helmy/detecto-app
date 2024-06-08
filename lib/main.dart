@@ -4,7 +4,6 @@ import 'package:detecto_app/screens/model/ColorModel.dart';
 import 'package:detecto_app/screens/news/NewsScreen.dart';
 import 'package:detecto_app/screens/text_recognition/TextRecognition.dart';
 import 'package:flutter/material.dart';
-import 'screens/auth/login/LoginScreen.dart';
 import 'screens/auth/register/registerScreen.dart';
 import 'screens/home/HomeScreen.dart';
 import 'screens/news/NewsDetails.dart';
@@ -35,7 +34,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: RegisterScreen.routeName,
       routes: {
-        LoginScreen.routeName:(context)=>LoginScreen(),
         RegisterScreen.routeName:(context)=>RegisterScreen(),
         HomeScreen.routeName:(context)=>HomeScreen(),
         NewsScreen.routeName:(context)=>NewsScreen(),

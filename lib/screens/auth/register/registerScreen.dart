@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import '../../../firebase/Firebase_funcs.dart';
 import '../../../firebase/classmodel.dart';
+import '../../../voiceUtilites/TtsClass.dart';
 import '../../home/HomeScreen.dart';
 import '../CustomFormField.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import '../../../voiceUtilites/TtsClass.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
-  // const LoginScreen({super.key});
+  late SpeechToText speech;
+  bool isListening=false;
+  String recognizedText='';
 
   static const String routeName = 'reg';
 
@@ -18,7 +23,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  FlutterTts ftts = FlutterTts();
+  TtsClass reader=TtsClass();
+
 
   var emailcontroller = TextEditingController();
 
@@ -52,6 +58,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     }
   }
+ //  @override
+ // void initState(){
+ //    super.initState();
+ //    reader.speak('Please sign in to continue!');
+ //
+ //    initSpeechToText();
+ //    check();
+ //  }
+
+  Future<void> initSpeechToText() async{
+    widget.speech=SpeechToText();
+    bool available=await widget.speech.initialize();
+    if(available){
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+
+  void startListening(String text)async{
+    if (!widget.isListening) {
+      bool available = await widget.speech.initialize();
+      if (available) {
+        setState(() => widget.isListening = true);
+        widget.speech.listen(
+          onResult: (result) {
+            setState((){ widget.recognizedText = result.recognizedWords;
+            text=widget.recognizedText;});
+
+          },
+        );
+      }
+    }
+  }
+
+
+  void stopListening(){
+    if(widget.isListening){
+      widget.speech.stop();
+      setState(() {
+        widget.isListening=false;
+      });
+    }
+  }
+
 
   @override
   void initState() {
@@ -73,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             GestureDetector(
               onTap: () {
-                speak('Please fill the data');
+                reader.speak('Please fill the data');
               },
               child: Text(
                 'Please fill the data!',
@@ -179,15 +230,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     ));
   }
 
-  void speak(String text) async {
-    await ftts.setLanguage("en-US");
-    await ftts.setSpeechRate(0.5); //speed of speech
-    await ftts.setVolume(1.0); //volume of speech
-    await ftts.setPitch(1); //pitc of sound
-    //play text to sp
-    await ftts.speak(text);
-  }
-
   void register() async {
     if (formkey.currentState?.validate() == true) {
       UserClassmodel user = UserClassmodel(
@@ -198,7 +240,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       FirebaseFunctions.CreateUser(emailcontroller.text, passcontroller.text,
           () {
         FirebaseFunctions.addUser(user);
-        speak('registered Successfully');
+        reader.speak('registered Successfully');
         Navigator.of(context)
             .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
       }, (message) {
