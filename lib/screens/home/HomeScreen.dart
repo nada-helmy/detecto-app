@@ -124,16 +124,46 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(height:height*.01 ,),
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Text('''Welcome!                                How can I help you!''',
+                     style:Theme.of(context).textTheme.bodyLarge!
+                 .copyWith(color: Color.fromARGB(225,67, 83, 52),fontSize:36 )),
+              ),
+              SizedBox(height:height*.02 ,),
+              //  FloatingActionButton(
+              //   onPressed:()
+              //
+              //   child: Icon(widget.isListening ? Icons.mic : Icons.mic_none),
+              // ),
+
+              // Padding(
+              //   padding: const EdgeInsets.only(left:250),
+              //   child: ElevatedButton(
+              //     onPressed: ()
+              //       {if( widget.isListening ){
+              //         stopListening();
+              //        }else{
+              //         startListening();
+              //
+              //       }
+              //     },
+              //     child: Icon(widget.isListening ? Icons.mic : Icons.mic_none), // icon of the button
+              //     style: ElevatedButton.styleFrom( // styling the button
+              //       shape: CircleBorder(),
+              //       padding: EdgeInsets.all(20),
+              //       backgroundColor: Color.fromARGB(225,67, 83, 52), // Button color
+              //       foregroundColor: Color.fromARGB(225,250, 241, 228), // Splash color
               GestureDetector(
                 onTap:() {
-          
+
                   reader.speak('''Welcome!How can I help you!''');
                 },
              child: Text('''Welcome!                                How can I help you!''',
                   style:Theme.of(context).textTheme.bodyLarge!
               .copyWith(color: Color.fromARGB(225,67, 83, 52),fontSize:38 )),),
               //SizedBox(height:height*.002,),
-          
+
                 Padding(
                   padding: const EdgeInsets.only(left:250),
                   child: ElevatedButton(
@@ -142,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         stopListening();
                        }else{
                         startListening();
-          
+
                       }
                     },
                     child: Icon(widget.isListening ? Icons.mic : Icons.mic_none), // icon of the button
@@ -154,49 +184,46 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-          
-          
-          
                 SizedBox(height:height*.02 ,),
                 GestureDetector(
                     onTap:() {
-          
+
                      reader.speak('Read Me');
                       },
                    child: AddressWidget(text: 'Read Me'),),
                 CustomRow(text: 'Open Camera',cameraNeed: true,ocr: true,colors: false,),
-            GestureDetector(
+                GestureDetector(
               onTap:() {
-          
+
                 reader.speak('Around Me');
               },
-          
+
               child:AddressWidget(text: 'Around Me',)),
                 CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,colors: false,),
-            GestureDetector(
+                GestureDetector(
               onTap:() {
-          
+
                 reader.speak('News');
               },
-          
+
               child: AddressWidget(text: 'News',)),
                 CustomRow(text: 'News',cameraNeed: false,ocr: false,colors: false,),
-          
+
                 SizedBox(height:height*.02 ,),
                 GestureDetector(
                   onTap:() {
-          
+
                    reader.speak('Colors');
                   },
                   child: AddressWidget(text: 'Colors'),),
                 CustomRow(text: 'Open Camera',cameraNeed: true,ocr: false,colors: true,),
-          
+
                 SizedBox(height:height*.02 ,),
 
-          
-          
-          
-          
+
+
+
+
 
               ],
             ),
